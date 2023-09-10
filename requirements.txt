@@ -1,0 +1,3 @@
+language: Go
+database: SQLite
+ui: Go + htmx SSR

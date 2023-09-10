@@ -1,0 +1,39 @@
+{
+  "name": "requester-client",
+  "version": "0.0.1",
+  "description": "Simple web-ui utility for easy requests controlling",
+  "main": "index.js",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build --emptyOutDir"
+  },
+  "author": "Mikhail Boreysho <klevak322@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.5.9",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "@types/uuid": "^9.0.3",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "@typescript-eslint/parser": "^6.5.0",
+    "@vitejs/plugin-react": "^4.0.4",
+    "autoprefixer": "^10.4.15",
+    "eslint": "8.22.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "postcss": "^8.4.29",
+    "tailwindcss": "^3.3.3",
+    "vite": "^4.4.9"
+  },
+  "dependencies": {
+    "axios": "^1.5.0",
+    "mobx": "^6.10.2",
+    "mobx-react-lite": "^4.0.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "uuid": "^9.0.0"
+  }
+}
