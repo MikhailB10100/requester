@@ -1,8 +1,8 @@
 import React from 'react'
-import { ItemProps } from './item.props'
+import { PathParametersTableItemProps } from './path-parameters-table-item.props'
 import { observer } from 'mobx-react-lite'
 
-function Item({ item }: ItemProps) {
+function PathParametersTableItem({ item }: PathParametersTableItemProps) {
   return (
     <tr>
       <td>{item.key}</td>
@@ -22,4 +22,4 @@ function Item({ item }: ItemProps) {
   )
 }
 
-export default observer(Item)
+export default observer(PathParametersTableItem)

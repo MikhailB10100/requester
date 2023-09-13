@@ -1,25 +1,12 @@
+import { RequestInteractionParametersController } from './request-interaction-parameters-controller'
 import { RequestInteractionOptionalParameter } from './request-interaction-optional-parameter'
-import { makeAutoObservable } from 'mobx'
 
-export class RequestInteractionOptionalParametersController {
-  parameters: Array<RequestInteractionOptionalParameter> = []
-
-  constructor() {
-    this.pushEmpty()
-    makeAutoObservable(this)
-  }
-
-  pushEmpty() {
-    this.parameters.push(
-      new RequestInteractionOptionalParameter(false, '', '', '')
+export class RequestInteractionOptionalParametersController extends RequestInteractionParametersController<RequestInteractionOptionalParameter> {
+  constructor(parameters: Array<RequestInteractionOptionalParameter>) {
+    super(
+      parameters,
+      () => new RequestInteractionOptionalParameter(false, '', '', '')
     )
-  }
-
-  delete(id: string) {
-    const index = this.parameters.findIndex((parameter) => parameter.id === id)
-    if (index !== -1) {
-      this.parameters.splice(index, 1)
-    }
   }
 
   toKeyValueObject(): Record<string, string> {

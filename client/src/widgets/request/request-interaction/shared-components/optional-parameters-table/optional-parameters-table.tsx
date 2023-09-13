@@ -1,18 +1,23 @@
 import React from 'react'
 import { OptionalParametersTableProps } from './optional-parameters-table.props'
-import Table from './table/table'
+import { ParametersTable } from '../parameters-table'
+import OptionalParametersTableItem from './optional-parameters-table-item/optional-parameters-table-item'
 
 function OptionalParametersTable({
   parametersController,
 }: OptionalParametersTableProps) {
   return (
-    <div>
-      <Table
-        items={parametersController.parameters}
-        onDelete={(id) => parametersController.delete(id)}
-      />
-      <button onClick={() => parametersController.pushEmpty()}>Append</button>
-    </div>
+    <ParametersTable
+      headers={['Enabled', 'Key', 'Value', 'Description']}
+      parametersController={parametersController}
+      renderItem={(item) => (
+        <OptionalParametersTableItem
+          key={item.id}
+          item={item}
+          onDelete={(id) => parametersController.delete(id)}
+        />
+      )}
+    />
   )
 }
 

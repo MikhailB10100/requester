@@ -1,5 +1,5 @@
 import { RequestInteractionPathParameter } from '@src/widgets/request/request-interaction/data-structures'
 
-export interface ItemProps {
+export interface PathParametersTableItemProps {
   item: RequestInteractionPathParameter
 }

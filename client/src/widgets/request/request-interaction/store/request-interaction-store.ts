@@ -3,19 +3,20 @@ import { RequestMethod } from '@src/shared/typing'
 import { RequestsService, SendRequestResponse } from '@src/entities/request'
 import { buildURL } from '@src/shared/utils'
 import {
-  RequestInteractionOptionalParametersController,
   RequestInteractionPathParameter,
+  RequestInteractionBody,
+  RequestInteractionOptionalParametersController,
 } from '@src/widgets/request/request-interaction/data-structures'
 import { getPathParametersFromURLTemplate } from '@src/shared/utils'
-import { RequestInteractionBody } from '@src/widgets/request/request-interaction/data-structures/request-interaction-body'
+import { AxiosHeaders } from 'axios'
 
 export class RequestInteractionStore {
   method: RequestMethod = 'GET'
   urlTemplate = ''
-  headers = new RequestInteractionOptionalParametersController()
-  query = new RequestInteractionOptionalParametersController()
+  headers = new RequestInteractionOptionalParametersController([])
+  query = new RequestInteractionOptionalParametersController([])
   pathParameters: Array<RequestInteractionPathParameter> = []
-  body = new RequestInteractionBody('none')
+  body = new RequestInteractionBody('none', [], [], '', undefined)
 
   response: SendRequestResponse = {
     headers: {},
@@ -65,8 +66,11 @@ export class RequestInteractionStore {
           parsedPathParameters,
           this.query.toKeyValueObject()
         ),
-        body: this.body,
-        headers: this.headers.toKeyValueObject(),
+        body: {
+          type: this.body.selectedType,
+          data: this.body.getSelectedValue(),
+        },
+        headers: this.headers.toKeyValueObject() as AxiosHeaders,
       })
 
       runInAction(() => {

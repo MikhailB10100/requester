@@ -1,1 +1,6 @@
 export * from './optional-parameters-table'
+export * from './optional-parameters-table-included-cell'
+export * from './parameters-table'
+export * from './parameters-table-description-cell'
+export * from './parameters-table-key-cell'
+export * from './parameters-table-value-cell'

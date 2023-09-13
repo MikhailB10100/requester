@@ -1,8 +1,9 @@
 import React from 'react'
 import { observer } from 'mobx-react-lite'
 import { useRequestInteractionContext } from '@src/widgets/request/request-interaction/context/request-interaction-context'
-import Item from './item/item'
+import Item from './path-parameters-table-item/path-parameters-table-item'
 
+// TODO: think about implementation through ParametersTable
 function PathParameters() {
   const context = useRequestInteractionContext()
 

@@ -10,11 +10,11 @@ import { Select } from '@src/shared/ui'
 import { observer } from 'mobx-react-lite'
 
 const bodyContext: Record<RequestModelBodyType, ReactNode> = {
-  'x-www-form-url-encoded': <BodyXWwwFormUrlEncoded />,
-  'form-data': <BodyFormData />,
-  binary: <BodyBinary />,
   none: <BodyNone />,
+  'form-data': <BodyFormData />,
+  'x-www-form-url-encoded': <BodyXWwwFormUrlEncoded />,
   raw: <BodyRaw />,
+  binary: <BodyBinary />,
 }
 
 const bodyTypes = Object.keys(bodyContext) as Array<RequestModelBodyType>
@@ -25,6 +25,7 @@ function Body() {
   return (
     <div>
       <Select
+        value={context.body.selectedType}
         options={bodyTypes.map((item) => ({
           text: item,
           value: item,

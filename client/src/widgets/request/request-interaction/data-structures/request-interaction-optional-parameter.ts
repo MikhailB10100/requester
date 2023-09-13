@@ -1,12 +1,8 @@
 import { action, extendObservable, makeObservable } from 'mobx'
-import { uuidv4 } from '@src/shared/utils'
+import { RequestInteractionParameter } from './request-interaction-parameter'
 
-export class RequestInteractionOptionalParameter {
-  id = uuidv4()
+export class RequestInteractionOptionalParameter extends RequestInteractionParameter {
   included: boolean = false
-  key: string = ''
-  value: string = ''
-  description: string = ''
 
   constructor(
     included: boolean,
@@ -14,33 +10,16 @@ export class RequestInteractionOptionalParameter {
     value: string,
     description: string
   ) {
+    super(key, value, description)
     extendObservable(this, {
       included,
-      key,
-      value,
-      description,
     })
     makeObservable(this, {
-      toggleIncluded: action,
-      setKey: action,
-      setValue: action,
-      setDescription: action,
+      setIncluded: action,
     })
   }
 
-  toggleIncluded() {
-    this.included = !this.included
-  }
-
-  setKey(value: string) {
-    this.key = value
-  }
-
-  setValue(value: string) {
-    this.value = value
-  }
-
-  setDescription(value: string) {
-    this.description = value
+  setIncluded(value: boolean) {
+    this.included = value
   }
 }

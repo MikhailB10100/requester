@@ -6,8 +6,42 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
+	"path"
 	"strings"
 )
+
+func UploadFileHanlder(w http.ResponseWriter, r *http.Request) {
+	r.ParseMultipartForm(100 << 20)
+
+	file, header, err := r.FormFile("file")
+	if err != nil {
+		fmt.Println("Error retrieving the file:", err)
+		return
+	}
+	defer file.Close()
+
+	newFile, err := os.Create(path.Join("upload", header.Filename))
+	if err != nil {
+		fmt.Println("Error creating the new file:", err)
+		return
+	}
+	defer newFile.Close()
+
+	_, err = io.Copy(newFile, file)
+	if err != nil {
+		fmt.Println("Error copying file data:", err)
+		return
+	}
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Write([]byte("http://127.0.0.1:8080" + "/" + newFile.Name()))
+}
+
+func SendHTTPRequest(method string, url string, headers map[string]string, body string) {
+
+}
 
 func LogRequestInfoMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -18,7 +52,7 @@ func LogRequestInfoMiddleware(next http.Handler) http.Handler {
 
 func HandleRequestsSend(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("handle requests send")
-	error := r.ParseMultipartForm(10_000)
+	error := r.ParseMultipartForm(10 << 20)
 	if error != nil {
 		fmt.Println("Error while parsing Form from request")
 		return
@@ -86,9 +120,16 @@ func HandleRequests(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/requests/", HandleRequests)
-	fs := http.FileServer(http.Dir("./dist/static"))
-	http.Handle("/", fs)
+	server := http.NewServeMux()
+	os.Mkdir("upload", 0755)
+	server.HandleFunc("/files/upload", UploadFileHanlder)
+	server.HandleFunc("/requests/", HandleRequests)
 
-	http.ListenAndServe(":8080", nil)
+	clientStaticServer := http.FileServer(http.Dir("./dist/static"))
+	server.Handle("/", clientStaticServer)
+
+	uploadStaticServer := http.FileServer(http.Dir("./upload"))
+	server.Handle("/upload/", http.StripPrefix("/upload", uploadStaticServer))
+
+	http.ListenAndServe(":8080", server)
 }

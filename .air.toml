@@ -1,2 +1,2 @@
 [build]
-exclude_dir=["client"]
+exclude_dir=["client", "upload"]
