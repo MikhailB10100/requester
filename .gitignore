@@ -4,3 +4,7 @@ node_modules
 dist/*
 upload
 database
+
+# System files
+.DS_Store
+Thumbs.db
